@@ -42,7 +42,15 @@
 
 .block-container-column{
     min-width: 200px;
-    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    gap: 60px;
+    align-items: center;
+    margin: 20px 0;
+}
+
+.block-container-row{
+    min-width: 200px;
     display: flex;
     flex-direction: column;
     justify-content: center;

@@ -19,24 +19,9 @@ function BlocksContainer() {
                     label: 'Child',
                     childs: [],
                 },
+
                 {
                     version: "0-1",
-                    label: 'Child',
-                    childs: [
-                        {
-                            version: "0-1-0",
-                            label: 'Child',
-                            childs: [],
-                        },
-                        {
-                            version: "0-1-1",
-                            label: 'Child',
-                            childs: [],
-                        },
-                    ],
-                },
-                {
-                    version: "0-2",
                     label: 'Child',
                     childs: [],
                 }

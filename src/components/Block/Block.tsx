@@ -11,21 +11,27 @@ function Block({tree, addChild}: Content) {
 
     return (
         <div className="block-layer">
-            <div className="block-container-column">
+            <div>
                 {tree?.map((item: any) => (
-                    <div className="block" key={item.version}>
-                        <p>{item.label} {item.version}</p>
-                        <span className="add" onClick={() => addChild(item)}>
-                            <Plus className="plus"/>
-                        </span>
+                    <div key={item.version} className="block-container-column">
+                        <div className="block">
+                            <p>{item.label} {item.version}</p>
+                            <span className="add" onClick={() => addChild(item)}>
+                                <Plus className="plus"/>
+                            </span>
+                        </div>
+                        <div className='.block-container-row'>
+                            {tree?.map((item: any) => (
+                                <Block
+                                    tree={item.childs}
+                                    addChild={addChild}/>
+                            ))}
+                        </div>
+
                     </div>
                 ))}
             </div>
-            {tree?.map((item: any) => (
-                item.childs.length > 0 && <Block
-                    tree={item.childs}
-                    addChild={addChild}/>
-            ))}
+
         </div>
 
     );
