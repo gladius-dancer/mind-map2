@@ -12,22 +12,29 @@ function Block({tree, addChild}: Content) {
     return (
         <div className="block-layer">
             <div>
-                {tree?.map((item: any) => (
-                    <div key={item.version} className="block-container-column">
+                {tree?.map((branch: any) => (
+                    <div key={branch.version} className="block-container-column">
                         <div className="block">
-                            <p>{item.label} {item.version}</p>
-                            <span className="add" onClick={() => addChild(item)}>
+                            <p>{branch.label} {branch.version}</p>
+                            <span className="add" onClick={() => addChild(branch.version)}>
                                 <Plus className="plus"/>
                             </span>
                         </div>
-                        <div className='.block-container-row'>
-                            {tree?.map((item: any) => (
-                                <Block
-                                    tree={item.childs}
-                                    addChild={addChild}/>
-                            ))}
-                        </div>
-
+                        {branch.childs.length > 0 && (
+                            <div className='.block-container-row'>
+                                {tree?.map((item: any) => {
+                                    if(branch.version === item.version){
+                                        return (
+                                            <Block
+                                                tree={item.childs}
+                                                addChild={addChild}
+                                            />
+                                        )
+                                    }
+                                }
+                                )}
+                            </div>
+                        )}
                     </div>
                 ))}
             </div>

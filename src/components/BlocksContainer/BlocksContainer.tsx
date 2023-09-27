@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import "./BlocksContainer.css";
 import {Block} from "../Block";
 
@@ -13,35 +13,36 @@ function BlocksContainer() {
         [{
             version: "0",
             label: 'Node',
-            childs: [
-                {
-                    version: "0-0",
-                    label: 'Child',
-                    childs: [],
-                },
-
-                {
-                    version: "0-1",
-                    label: 'Child',
-                    childs: [],
-                }
-            ],
+            childs: [],
         }],
     );
 
     const searchAndChangeElement = (treeArray: any, version: any) => {
-        return treeArray.map((node: any) => {
-            if (node.version === version.version) {
-                return {
-                    ...node, childs: [...node.childs, {
-                        version: `version ${String(Number(version.version) + 1)}`,
-                        label: `Child ${version.version + "." + String(Number(version.version) + 1)}`,
-                        childs: []
-                    }]
-                };
-            } else if (node.childs) {
+        return treeArray?.map((node: any) => {
+            if (node.version === version) {
+                if(node.childs.length > 0){
+                    return {
+                        ...node, childs: [...node.childs, {
+                            version: `${node.version}-${node.childs.length}`,
+                            label: `Child`,
+                            childs: []
+                        }]
+                    };
+                }else{
+                    return {
+                        ...node, childs: [...node.childs, {
+                            version: `${node.version}-0`,
+                            label: `Child`,
+                            childs: []
+                        }]
+                    };
+                }
+
+            }
+            else if (node.childs.length > 0) {
                 return {...node, childs: searchAndChangeElement(node.childs, version)};
-            } else {
+            }
+            else {
                 return node;
             }
         });
@@ -49,7 +50,12 @@ function BlocksContainer() {
     const addChild = (version: string) => {
         const modifiedTree = searchAndChangeElement(tree, version);
         setTree(modifiedTree);
+        console.log(modifiedTree);
     };
+
+    useEffect(() => {
+        console.log(tree);
+    }, [tree]);
 
     return (
         <div className="block-container">
