@@ -1,6 +1,7 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import "./BlocksContainer.css";
 import {Block} from "../Block";
+import ConnectionsContainer from "../ConnectionsContainer/ConnectionsContainer";
 
 type TreeType = {
     version: string,
@@ -37,7 +38,6 @@ function BlocksContainer() {
                         }]
                     };
                 }
-
             }
             else if (node.childs.length > 0) {
                 return {...node, childs: searchAndChangeElement(node.childs, version)};
@@ -50,12 +50,7 @@ function BlocksContainer() {
     const addChild = (version: string) => {
         const modifiedTree = searchAndChangeElement(tree, version);
         setTree(modifiedTree);
-        console.log(modifiedTree);
     };
-
-    useEffect(() => {
-        console.log(tree);
-    }, [tree]);
 
     return (
         <div className="block-container">
