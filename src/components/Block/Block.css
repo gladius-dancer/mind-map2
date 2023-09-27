@@ -1,6 +1,50 @@
-.block{
-    width: 150px;
+.block {
+    width: 180px;
     height: 60px;
-    border-radius: 20px;
+    border-radius: 15px;
     background: #ce96ff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.block:hover {
+    .add {
+        display: flex;
+    }
+}
+
+.add {
+    width: 24px;
+    height: 24px;
+    border-radius: 7px;
+    background: #e7e6e6;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    right: -12px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: none;
+}
+
+.plus {
+    width: 16px;
+    height: 16px;
+}
+
+.block-layer{
+    display: flex;
+    flex-direction: row;
+    gap: 80px;
+}
+
+.block-container-column{
+    min-width: 200px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 60px;
 }

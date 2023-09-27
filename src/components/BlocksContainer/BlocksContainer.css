@@ -1,0 +1,11 @@
+.block-container{
+    position: relative;
+    min-height: 100vh;
+    min-width: 100vh;
+    display: flex;
+    flex-direction: row;
+    /*justify-content: center;*/
+    align-items: center;
+    gap: 40px;
+    padding: 20px;
+}

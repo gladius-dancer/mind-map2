@@ -1,12 +1,12 @@
 import React from 'react';
-import Block from "./components/Block/Block";
+import {BlockContainer} from "./components/BlocksContainer";
 
 function App() {
-  return (
-    <div className="App">
-      <Block/>
-    </div>
-  );
+    return (
+        <div className="App">
+            <BlockContainer/>
+        </div>
+    );
 }
 
 export default App;
