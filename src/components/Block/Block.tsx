@@ -1,68 +1,113 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {MutableRefObject, RefObject, useEffect, useRef, useState} from 'react';
 import "./Block.css";
 import {ReactComponent as Plus} from "../../assets/icons/plus-solid.svg"
-import ConnectionsContainer from "../ConnectionsContainer/ConnectionsContainer";
+import {ConnectionType} from "../ConnectionsContainer/types/ConnectionType";
+import {TreeType} from "../BlocksContainer/hooks/useAddChild";
+import {ConnectionsContainer} from "../ConnectionsContainer";
 
 type Content = {
     tree: any;
     addChild: (a: string) => void;
 }
 
+type LocationType = {
+    x: number;
+    y: number;
+}
+
+type CordinateType = {
+    start: LocationType;
+    end: LocationType;
+    childs: ConnectionType[]
+}
+
+
 function Block({tree, addChild}: Content) {
 
     const elementRefs = useRef<any[]>([]);
-    const [cordinate, setCordinate] = useState<any[]>([])
+    const [cordinate, setCordinate] = useState<CordinateType[]>([]);
+
+    const getCordinates = (tree: any) => {
+        // tree.forEach((item: any)=>{
+        //     console.log(elementRefs.current[item.version]);
+        //
+        // })
+
+        elementRefs.current.map((item)=>{
+            console.log(item.key);
+        })
+
+        /*tree?.forEach((node: any, index: any) => {
+            if (node.childs.length > 0) {
+                const elementRef = elementRefs.current[node.version];
+                const rect = elementRef.getBoundingClientRect();
+                setCordinate((prev: any) => {
+                    return prev.map((item: any) => {
+                        if (item.version === node.version) {
+                            return {...item, start: {x: rect.x + 180, y: rect.y + 30}, end: {x: rect.x, y: rect.y + 30}}
+                        }
+                    })
+                })
+                getCordinates(node.childs);
+            } else {
+                const elementRef = elementRefs.current[node.version];
+                const rect = elementRef.getBoundingClientRect();
+                setCordinate((prev: any) => {
+                    return prev.map((item: any) => {
+                        if (item.version === node.version) {
+                            return {...item, start: {x: rect.x + 180, y: rect.y + 30}, end: {x: rect.x, y: rect.y + 30}}
+                        }
+                    })
+                })
+            }
+        });*/
+    };
 
     useEffect(() => {
-        const getCoordinatesRecursive = (elements: any) => {
-            elements.forEach((element: any, index: any) => {
-                const elementRef = elementRefs.current[index];
-                if (elementRef) {
-                    const rect = elementRef.getBoundingClientRect();
-                    setCordinate(prev => [...prev, {x: rect.x, y: rect.y}])
-                    console.log(rect);
-                }
-                if (element?.childs?.length > 0) {
-                    getCoordinatesRecursive(element.childs);
-                }
-            });
-        };
-        getCoordinatesRecursive(tree);
+        getCordinates(tree);
+
     }, [tree]);
 
     return (
         <div className="block-layer">
+            {/*{cordinate?.map((start, index) => {*/}
+            {/*        return start.childs?.map((end: any) => (*/}
+                        <ConnectionsContainer
+                            // key={index}
+                            // start={{x: start.start.x, y: start.start.y}}
+                            // end={{x: end.end.x, y: end.end.y}}
+                            start={{x: 300, y: 300}}
+                            end={{x: 400, y: 500}}
+                        />
+            {/*        ))*/}
+            {/*    }*/}
+            {/*)*/}
+            {/*}*/}
             <div>
-                {cordinate.map((item, index)=>(
-                    <ConnectionsContainer
-                        key={index}
-                        start={{x: item?.x + 180, y: item?.y + 30}}
-                        end={{x: 500, y: 500}}/>
-                ))}
-                {tree?.map((branch: any, index: any) => (
+                {tree?.map(({childs, label, version}: TreeType, index: number) => (
                     <div
-                        key={branch.version}
-                        ref={(el) => (elementRefs.current[index] = el)}
+                        key={version}
+                        ref={(el:HTMLDivElement | null) => elementRefs.current[index] = el}
                         className="block-container-column">
                         <div className="block">
-                            <p>{branch.label} {branch.version}</p>
-                            <span className="add" onClick={() => addChild(branch.version)}>
+                            <p>{label} {version}</p>
+                            <span className="add" onClick={() => addChild(version)}>
                                 <Plus className="plus"/>
                             </span>
                         </div>
-                        {branch.childs.length > 0 && (
+                        {childs?.length > 0 && (
                             <div className='.block-container-row'>
                                 {tree?.map((item: any) => {
-                                    if(branch.version === item.version){
-                                        return (
-                                            <Block
-                                                key={branch.version}
-                                                tree={item.childs}
-                                                addChild={addChild}
-                                            />
-                                        )
+                                        if(version === item.version){
+                                            return (
+                                                <Block
+                                                    key={version}
+                                                    tree={item.childs}
+                                                    addChild={addChild}
+                                                />
+                                            )
+                                        }
                                     }
-                                }
                                 )}
                             </div>
                         )}
@@ -70,7 +115,6 @@ function Block({tree, addChild}: Content) {
                 ))}
             </div>
         </div>
-
     );
 }
 

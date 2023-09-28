@@ -1,56 +1,14 @@
-import React, {useState} from 'react';
+import React from 'react';
 import "./BlocksContainer.css";
 import {Block} from "../Block";
-import ConnectionsContainer from "../ConnectionsContainer/ConnectionsContainer";
-
-type TreeType = {
-    version: string,
-    label: string,
-    childs?: TreeType[]
-}
+import useAddChild from "./hooks/useAddChild";
 
 function BlocksContainer() {
-    const [tree, setTree] = useState<TreeType[]>(
-        [{
-            version: "0",
-            label: 'Node',
-            childs: [],
-        }],
-    );
 
-    const searchAndChangeElement = (treeArray: any, version: any) => {
-        return treeArray?.map((node: any) => {
-            if (node.version === version) {
-                if(node.childs.length > 0){
-                    return {
-                        ...node, childs: [...node.childs, {
-                            version: `${node.version}-${node.childs.length}`,
-                            label: `Child`,
-                            childs: []
-                        }]
-                    };
-                }else{
-                    return {
-                        ...node, childs: [...node.childs, {
-                            version: `${node.version}-0`,
-                            label: `Child`,
-                            childs: []
-                        }]
-                    };
-                }
-            }
-            else if (node.childs.length > 0) {
-                return {...node, childs: searchAndChangeElement(node.childs, version)};
-            }
-            else {
-                return node;
-            }
-        });
-    };
-    const addChild = (version: string) => {
-        const modifiedTree = searchAndChangeElement(tree, version);
-        setTree(modifiedTree);
-    };
+    const {
+        tree,
+        addChild
+    } = useAddChild();
 
     return (
         <div className="block-container">
@@ -58,6 +16,17 @@ function BlocksContainer() {
                 tree={tree}
                 addChild={addChild}
             />
+            {/*{cordinate?.map((start, index) => {
+                    return start.childs?.map((end: any) => (
+                        <ConnectionsContainer
+                            key={index}
+                            start={{x: start.start.x, y: start.start.y}}
+                            end={{x: end.end.x, y: end.end.y}}
+                        />
+                    ))
+                }
+            )
+            }*/}
         </div>
     );
 }
