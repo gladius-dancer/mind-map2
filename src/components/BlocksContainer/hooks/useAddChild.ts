@@ -7,13 +7,13 @@ export type TreeType = {
 }
 
 function useAddChild() {
-    const [tree, setTree] = useState<TreeType[]>(
-        [{
+    const [tree, setTree] = useState<TreeType[]>([
+        {
             version: "0",
             label: 'Node',
             childs: [],
-        }],
-    );
+        }
+    ]);
 
     const searchAndChangeElement = (treeArray: any, version: any) => {
         return treeArray?.map((node: any) => {
