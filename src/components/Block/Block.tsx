@@ -10,39 +10,38 @@ type Content = {
 
 function Block({tree, addChild}: Content) {
 
-    const elementRefs = useRef([]);
-    const [cordinate, setCordinate] = useState([])
+    const elementRefs = useRef<any[]>([]);
+    const [cordinate, setCordinate] = useState<any[]>([])
 
     useEffect(() => {
         const getCoordinatesRecursive = (elements: any) => {
             elements.forEach((element: any, index: any) => {
                 const elementRef = elementRefs.current[index];
                 if (elementRef) {
-                    // @ts-ignore
                     const rect = elementRef.getBoundingClientRect();
-                    // @ts-ignore
                     setCordinate(prev => [...prev, {x: rect.x, y: rect.y}])
-                    // console.log(`${element.name} coordinates:`, rect);
+                    console.log(rect);
                 }
                 if (element?.childs?.length > 0) {
                     getCoordinatesRecursive(element.childs);
                 }
             });
         };
-
         getCoordinatesRecursive(tree);
     }, [tree]);
 
     return (
         <div className="block-layer">
             <div>
-                {cordinate.map((item)=>(
-                    <ConnectionsContainer start={{x: 0, y: 0}} end={item}/>
+                {cordinate.map((item, index)=>(
+                    <ConnectionsContainer
+                        key={index}
+                        start={{x: item?.x + 180, y: item?.y + 30}}
+                        end={{x: 500, y: 500}}/>
                 ))}
                 {tree?.map((branch: any, index: any) => (
                     <div
                         key={branch.version}
-                        // @ts-ignore
                         ref={(el) => (elementRefs.current[index] = el)}
                         className="block-container-column">
                         <div className="block">
@@ -57,6 +56,7 @@ function Block({tree, addChild}: Content) {
                                     if(branch.version === item.version){
                                         return (
                                             <Block
+                                                key={branch.version}
                                                 tree={item.childs}
                                                 addChild={addChild}
                                             />

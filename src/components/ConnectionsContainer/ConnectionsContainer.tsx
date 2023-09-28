@@ -44,12 +44,12 @@ function ConnectionsContainer({start, end}: ConnectionType) {
 
     return (
         <svg className="connections-container">
-            <g className="g">
+            <g>
                 <path
                     d={line}
                     fill="transparent"
                     stroke="red"
-                    stroke-width="5"
+                    strokeWidth="2"
                 ></path>
             </g>
         </svg>
