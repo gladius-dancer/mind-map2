@@ -1,14 +1,14 @@
 import React, {useEffect} from 'react';
 import "./Block.css";
-import {ReactComponent as Plus} from "../../assets/icons/plus-solid.svg"
-import {TreeType} from "../BlocksContainer/hooks/useAddChild";
 import useBlock from "./hooks/useBlock";
-import {LocationType} from "./types/BlockTypes";
+import {Icons} from "../../assets/Icons";
+import {TreeType} from "../../types/TreeType";
+import {CoordinateType} from "../../types/CoordinateType";
 
 type Props = {
     treeItem: TreeType;
     addChild: (a: string) => void;
-    addCords: (val: LocationType[][]) => void;
+    addCords: (val: CoordinateType[][]) => void;
 }
 
 function Block({treeItem, addChild, addCords}: Props) {
@@ -20,7 +20,7 @@ function Block({treeItem, addChild, addCords}: Props) {
     } = useBlock();
 
     useEffect(() => {
-        const cords: LocationType[][] = [];
+        const cords: CoordinateType[][] = [];
         const getRefCordinates = (branch: TreeType[]) => {
             branch.map((item: TreeType) => {
                 item.childs.map((child) => {
@@ -31,6 +31,8 @@ function Block({treeItem, addChild, addCords}: Props) {
                 })
                 getRefCordinates(item?.childs)
             })
+
+            return cords
         }
         getRefCordinates([treeItem]);
         addCords(cords);
@@ -42,10 +44,10 @@ function Block({treeItem, addChild, addCords}: Props) {
                 <div className="block" id={treeItem.version}>
                     <p>{label} {version}</p>
                     <span className="add" onClick={() => addChild(version)}>
-                        <Plus className="plus"/>
+                        <img src={Icons.Plus} className='plus' alt='plus'/>
                     </span>
                 </div>
-                <div className='.block-container-row'>
+                <div className='block-container-row'>
                     {childs?.map((item: TreeType) => (
                             <Block
                                 key={item.version}

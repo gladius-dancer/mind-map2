@@ -1,10 +1,6 @@
 import {useState} from 'react';
+import {TreeType} from "../../../types/TreeType";
 
-export type TreeType = {
-    version: string,
-    label: string,
-    childs: TreeType[]
-}
 function useAddChild() {
     const [tree, setTree] = useState<TreeType[]>([
         {
@@ -14,35 +10,42 @@ function useAddChild() {
         }
     ]);
 
-    const searchAndChangeElement = (treeArray: any, version: any) => {
-        return treeArray?.map((node: any) => {
+    const searchAndChangeElement = (tree: TreeType[], version: string): TreeType[] => {
+        return tree.map((node: TreeType) => {
             if (node.version === version) {
-                if(node.childs.length > 0){
+                if (node.childs.length > 0) {
                     return {
-                        ...node, childs: [...node.childs, {
-                            version: `${node.version}-${node.childs.length}`,
-                            label: `Child`,
-                            childs: []
-                        }]
+                        ...node,
+                        childs: [
+                            ...node.childs,
+                            {
+                                version: `${node.version}-${node.childs.length}`,
+                                label: `Child`,
+                                childs: []
+                            }
+                        ]
                     };
-                }else{
+                } else {
                     return {
-                        ...node, childs: [...node.childs, {
-                            version: `${node.version}-0`,
-                            label: `Child`,
-                            childs: []
-                        }]
+                        ...node,
+                        childs: [
+                            ...node.childs,
+                            {
+                                version: `${node.version}-0`,
+                                label: `Child`,
+                                childs: []
+                            }
+                        ]
                     };
                 }
-            }
-            else if (node.childs.length > 0) {
+            } else if (node.childs.length > 0) {
                 return {...node, childs: searchAndChangeElement(node.childs, version)};
             }
-            else {
-                return node;
-            }
+
+            return node;
         });
     };
+
     const addChild = (version: string) => {
         const modifiedTree = searchAndChangeElement(tree, version);
         setTree(modifiedTree);
