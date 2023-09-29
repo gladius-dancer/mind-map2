@@ -8,19 +8,19 @@ type Props = {
 };
 
 export function TreeLines({ coords, calculatePath }: Props) {
-  return (
-    <svg className="block-image">
-      <path d="M20,4L30,15z" className="path-arrow-top" />
-      <path d="M20,26L30,15z" className="path-arrow-bottom" />
-      {coords.map((itemCords: CoordinateType[], item: number) => (
-        <path
-          key={item}
-          d={calculatePath(itemCords[0], itemCords[1])}
-          fill="transparent"
-          stroke="red"
-          strokeWidth="2"
-        ></path>
-      ))}
-    </svg>
-  );
+    return (
+        <svg className="block-image">
+            <path d="M20,4L30,15z" className="path-arrow-top" />
+            <path d="M20,26L30,15z" className="path-arrow-bottom" />
+            {coords.map((itemCords: CoordinateType[], item: number) => (
+                <path
+                    key={item}
+                    d={calculatePath(itemCords[0], itemCords[1])}
+                    fill="transparent"
+                    stroke="red"
+                    strokeWidth="2"
+                ></path>
+            ))}
+        </svg>
+    );
 }
