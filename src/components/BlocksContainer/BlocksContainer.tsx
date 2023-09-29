@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import "./BlocksContainer.css";
 import {Block} from "../Block";
 import useAddChild from "./hooks/useAddChild";
@@ -13,6 +13,10 @@ function BlocksContainer() {
 
     const [cords, setCords] = useState<any>([]);
     console.log(cords)
+
+    const clearCords = ()=>{
+        setCords([]);
+    }
 
     const distance = (start: CordinateType, end: CordinateType) => {
         const dx = start.x - end.x;
@@ -43,8 +47,9 @@ function BlocksContainer() {
             <svg className='block-image'>
                 <path d="M20,4L30,15z" className="path-arrow-top"/>
                 <path d="M20,26L30,15z" className="path-arrow-bottom"/>
-                {cords.map((itemCords: any) => (
+                {cords.map((itemCords: any, item: number) => (
                         <path
+                            key={item}
                             d={calculatePath(itemCords[0], itemCords[1])}
                             fill="transparent"
                             stroke="red"
@@ -57,7 +62,8 @@ function BlocksContainer() {
             <Block
                 treeItem={tree[0]}
                 addChild={addChild}
-                addCords={(val: any) => setCords([...cords, val])}
+                addCords={(val: any) => setCords(val)}
+                clearCords={clearCords}
             />
         </div>
     );

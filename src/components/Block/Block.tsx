@@ -6,7 +6,8 @@ import {TreeType} from "../BlocksContainer/hooks/useAddChild";
 type Content = {
     treeItem: TreeType;
     addChild: (a: string) => void;
-    addCords: (val: any[]) => void
+    addCords: (val: any[]) => void;
+    clearCords: ()=>void;
 }
 
 type LocationType = {
@@ -19,7 +20,7 @@ export type CordinateType = {
     y: number;
 }
 
-function Block({treeItem, addChild, addCords}: Content) {
+function Block({treeItem, addChild, addCords, clearCords}: Content) {
     const {version, label, childs} = treeItem;
 
     const getParrentCordinates = (element: HTMLElement | null): CordinateType => {
@@ -35,19 +36,21 @@ function Block({treeItem, addChild, addCords}: Content) {
     };
 
     useEffect(() => {
+        clearCords();
+        const cords: any = [];
         const getRefCordinates = (branch: TreeType[])=>{
             branch.map((item: TreeType)=>{
-                if(item.childs.length > 0){
-                    // console.log([item.version, document.getElementById(item.version)?.getBoundingClientRect()]);
+                // if(item.childs.length > 0){
                     item.childs.map((child)=>{
-                        addCords([getParrentCordinates(document.getElementById(item.version)), getChildCordinates(document.getElementById(child.version))])
+                        cords.push([getParrentCordinates(document.getElementById(item.version)), getChildCordinates(document.getElementById(child.version))])
                     })
                     getRefCordinates(item?.childs)
-                }
+                // }
             })
-        }
 
+        }
         getRefCordinates([treeItem]);
+        addCords(cords);
     }, [treeItem]);
 
     return (
@@ -66,6 +69,7 @@ function Block({treeItem, addChild, addCords}: Content) {
                                 treeItem={item}
                                 addChild={addChild}
                                 addCords={addCords}
+                                clearCords={clearCords}
                             />
                         )
                     )}
