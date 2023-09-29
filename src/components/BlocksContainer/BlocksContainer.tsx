@@ -11,9 +11,8 @@ function BlocksContainer() {
         addChild
     } = useAddChild();
 
-    const [cords, setCords] = useState<CordinateType[][]>([]);
-
-    console.log(cords);
+    const [cords, setCords] = useState<any>([]);
+    console.log(cords)
 
     const distance = (start: CordinateType, end: CordinateType) => {
         const dx = start.x - end.x;
@@ -44,20 +43,21 @@ function BlocksContainer() {
             <svg className='block-image'>
                 <path d="M20,4L30,15z" className="path-arrow-top"/>
                 <path d="M20,26L30,15z" className="path-arrow-bottom"/>
-                {cords.map(itemCords => (
-                    <path
-                        d={calculatePath(itemCords[0], itemCords[1])}
-                        fill="transparent"
-                        stroke="red"
-                        strokeWidth="2"
-                    ></path>
-                ))}
+                {cords.map((itemCords: any) => (
+                        <path
+                            d={calculatePath(itemCords[0], itemCords[1])}
+                            fill="transparent"
+                            stroke="red"
+                            strokeWidth="2"
+                        ></path>
+                    )
+                )}
             </svg>
 
             <Block
                 treeItem={tree[0]}
                 addChild={addChild}
-                addCords={(val: CordinateType[]) => setCords([...cords, val])}
+                addCords={(val: any) => setCords([...cords, val])}
             />
         </div>
     );
