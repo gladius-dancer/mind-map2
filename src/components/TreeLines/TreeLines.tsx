@@ -1,5 +1,6 @@
 import {CoordinateType} from "../../types/CoordinateType";
 import React from "react";
+import './TreeLines.css'
 
 type Props = {
     coords: CoordinateType[][];
