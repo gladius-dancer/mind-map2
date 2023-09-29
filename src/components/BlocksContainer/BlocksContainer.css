@@ -9,3 +9,14 @@
     gap: 40px;
     padding: 20px;
 }
+
+.block-image {
+    pointer-events: none;
+    overflow: hidden;
+    position: absolute;
+    left: 0;
+    top: 0  ;
+    width: 100%;
+    height: 100%;
+    transform-origin: left top;
+}
