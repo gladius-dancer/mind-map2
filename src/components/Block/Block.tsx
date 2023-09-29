@@ -3,11 +3,12 @@ import "./Block.css";
 import {ReactComponent as Plus} from "../../assets/icons/plus-solid.svg"
 import {TreeType} from "../BlocksContainer/hooks/useAddChild";
 import useBlock from "./hooks/useBlock";
+import {LocationType} from "./types/BlockTypes";
 
 type Props = {
     treeItem: TreeType;
     addChild: (a: string) => void;
-    addCords: (val: any[]) => void;
+    addCords: (val: LocationType[][]) => void;
 }
 
 function Block({treeItem, addChild, addCords}: Props) {
@@ -19,7 +20,7 @@ function Block({treeItem, addChild, addCords}: Props) {
     } = useBlock();
 
     useEffect(() => {
-        const cords: any = [];
+        const cords: LocationType[][] = [];
         const getRefCordinates = (branch: TreeType[]) => {
             branch.map((item: TreeType) => {
                 item.childs.map((child) => {

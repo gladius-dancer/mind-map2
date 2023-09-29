@@ -1,8 +1,8 @@
 import {useState} from "react";
-import {CordinateType} from "../../Block/types/BlockTypes";
+import {CordinateType, LocationType} from "../../Block/types/BlockTypes";
 
 function useDraw() {
-    const [cords, setCords] = useState<any>([]);
+    const [cords, setCords] = useState<LocationType[][]>([]);
     const distance = (start: CordinateType, end: CordinateType) => {
         const dx = start.x - end.x;
         const dy = start.y - end.y;

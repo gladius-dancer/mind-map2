@@ -1,7 +1,3 @@
-import {TreeType} from "../../BlocksContainer/hooks/useAddChild";
-
-
-
 export type LocationType = {
     x: number;
     y: number;

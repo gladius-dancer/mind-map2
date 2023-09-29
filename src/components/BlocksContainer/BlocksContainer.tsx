@@ -3,6 +3,7 @@ import "./BlocksContainer.css";
 import {Block} from "../Block";
 import useAddChild from "./hooks/useAddChild";
 import useDraw from "./hooks/useDraw";
+import {LocationType} from "../Block/types/BlockTypes";
 
 function BlocksContainer() {
 
@@ -22,7 +23,7 @@ function BlocksContainer() {
             <svg className='block-image'>
                 <path d="M20,4L30,15z" className="path-arrow-top"/>
                 <path d="M20,26L30,15z" className="path-arrow-bottom"/>
-                {cords.map((itemCords: any, item: number) => (
+                {cords.map((itemCords: LocationType[], item: number) => (
                         <path
                             key={item}
                             d={calculatePath(itemCords[0], itemCords[1])}
@@ -36,7 +37,7 @@ function BlocksContainer() {
             <Block
                 treeItem={tree[0]}
                 addChild={addChild}
-                addCords={(val: any) => setCords(val)}
+                addCords={(val: LocationType[][]) => setCords(val)}
             />
         </div>
     );
