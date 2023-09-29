@@ -1,3 +1,5 @@
-import {lazy} from "react";
+import { lazy } from "react";
 
-export const ConnectionsContainer = lazy(()=> import('./ConnectionsContainer'));
+export const ConnectionsContainer = lazy(
+  () => import("./ConnectionsContainer"),
+);

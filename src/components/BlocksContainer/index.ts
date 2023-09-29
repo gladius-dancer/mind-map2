@@ -1,3 +1,3 @@
-import {lazy} from "react";
+import { lazy } from "react";
 
-export const BlockContainer = lazy(()=> import('./BlocksContainer'));
+export const BlockContainer = lazy(() => import("./BlocksContainer"));
