@@ -5,7 +5,6 @@ export type TreeType = {
     label: string,
     childs: TreeType[]
 }
-
 function useAddChild() {
     const [tree, setTree] = useState<TreeType[]>([
         {

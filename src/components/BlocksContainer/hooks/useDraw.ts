@@ -1,5 +1,5 @@
 import {useState} from "react";
-import {CordinateType} from "../../Block/Block";
+import {CordinateType} from "../../Block/types/BlockTypes";
 
 function useDraw() {
     const [cords, setCords] = useState<any>([]);
@@ -29,7 +29,6 @@ function useDraw() {
         cords,
         setCords,
         calculatePath,
-
     }
 }
 

@@ -2,6 +2,7 @@ import React, {useEffect} from 'react';
 import "./Block.css";
 import {ReactComponent as Plus} from "../../assets/icons/plus-solid.svg"
 import {TreeType} from "../BlocksContainer/hooks/useAddChild";
+import useBlock from "./hooks/useBlock";
 
 type Props = {
     treeItem: TreeType;
@@ -9,30 +10,13 @@ type Props = {
     addCords: (val: any[]) => void;
 }
 
-type LocationType = {
-    x: number;
-    y: number;
-}
-
-export type CordinateType = {
-    x: number;
-    y: number;
-}
-
 function Block({treeItem, addChild, addCords}: Props) {
     const {version, label, childs} = treeItem;
 
-    const getParrentCordinates = (element: HTMLElement | null): CordinateType => {
-        const parent = element?.getBoundingClientRect();
-        if (parent) return {x: parent.x + 180, y: parent.y + 30};
-        return {x: 0, y: 0};
-    };
-
-    const getChildCordinates = (element: HTMLElement | null): CordinateType => {
-        const parent = element?.getBoundingClientRect();
-        if (parent) return {x: parent.x, y: parent.y + 30};
-        return {x: 0, y: 0};
-    };
+    const {
+        getParrentCordinates,
+        getChildCordinates
+    } = useBlock();
 
     useEffect(() => {
         const cords: any = [];
@@ -46,7 +30,6 @@ function Block({treeItem, addChild, addCords}: Props) {
                 })
                 getRefCordinates(item?.childs)
             })
-
         }
         getRefCordinates([treeItem]);
         addCords(cords);

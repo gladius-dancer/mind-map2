@@ -4,7 +4,6 @@ import {Block} from "../Block";
 import useAddChild from "./hooks/useAddChild";
 import useDraw from "./hooks/useDraw";
 
-
 function BlocksContainer() {
 
     const {
@@ -17,7 +16,6 @@ function BlocksContainer() {
         setCords,
         calculatePath
     } = useDraw()
-
 
     return (
         <div className="block-container">
@@ -35,7 +33,6 @@ function BlocksContainer() {
                     )
                 )}
             </svg>
-
             <Block
                 treeItem={tree[0]}
                 addChild={addChild}
